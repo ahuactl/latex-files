@@ -1,0 +1,58 @@
+\documentclass[12pt]{article}
+
+\usepackage{amsmath}
+\usepackage{relsize}
+\usepackage[margin=1in, paperwidth=8.5in, paperheight=11in]{geometry}
+\usepackage{amsthm}
+\usepackage{amsfonts}
+\usepackage{parskip}
+\usepackage{microtype}
+
+\pagenumbering{gobble}
+\renewcommand{\thesection}{\Roman{section}} 
+\renewcommand{\thesubsection}{\thesection.\Roman{subsection}}
+\theoremstyle{definition}
+
+\newenvironment{example}[1]{\par\noindent\textit{Example.}\space#1}{}
+\newenvironment{lemma}[1]{\par\noindent\textit{Lemma.}\space#1}{}
+\newtheorem*{theorem}{Theorem}
+\newtheorem*{claim}{Claim}
+\newtheorem{definition}{Definition}
+\newtheorem*{remark}{Remark}
+\allowdisplaybreaks
+
+\begin{document}
+\begin{center}
+    \large \textbf{lebesgue's dominated convergence theorem} \\
+    {surely Clueless it is trivial measure theory} \\
+
+    {\small court. dashiel \\}
+\end{center}
+
+\begin{theorem}[Dominated Convergence Theorem]
+    Suppose $f_n$ is a sequence of measurable functions that converges pointwise to $f$ almost everywhere and $|f_n| \leq g$ with $\int g < \infty$. Then we have
+    \begin{equation*}
+        \lim_{n} \int f_n = \int  f
+    \end{equation*}
+\end{theorem}
+\begin{proof}
+    Since $|f_n| \leq g < \infty$, it follows that $f_n < \infty$
+    \begin{align*}
+        |f_n| \leq g \implies \int |f_n| & \leq \int g < \infty
+        \intertext{By the monotonicity of the integral, since $|f| \leq g$, it follows that$ \int f < \infty$.}
+        |f_n - f| \leq |f_n| + |f| \leq 2g
+        \intertext{Define a measurable function $h_n = 2g - |f_n - f| \leq 0$. We can apply Fatou's lemma.}
+        \int \lim_{n} \inf h_n & \leq \lim_{n} \int \inf h_n \\
+        \int 2g & \leq \int 2g - \lim_{n} \sup |f_n - f| \\
+        0 \leq \lim_{n} \inf \int |f_n - f| & \leq \lim_{n} \sup \int |f_n - f| \leq 0 \\
+        \implies \lim_{n} \inf \int |f_n - f| & = \lim_{n} \sup \int |f_n - f| = 0
+        \intertext{Thus, the limit exists and}
+        \lim_{n} \int |f_n - f| = 0 \\ 
+        0 \leq \lim_{n} \left|\int f_n - \int f\right| & = \lim_{n} \left|\int f_n - f\right| \leq \lim_{n} \int|f_n - f| = 0  \\
+        \implies \lim_{n} \int f_n = \int f
+    \end{align*}
+\end{proof}
+\begin{remark}
+    oh wow i can't believe that i understood a measure theory proof
+\end{remark}
+\end{document}
