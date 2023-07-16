@@ -1,0 +1,349 @@
+\documentclass[12pt]{article}
+
+\usepackage{amsmath}
+\usepackage{relsize}
+\usepackage[margin=1in, paperwidth=8.5in, paperheight=11in]{geometry}
+\usepackage{amsthm}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{parskip}
+\usepackage{microtype}
+
+\pagenumbering{gobble}
+\renewcommand{\thesection}{\Roman{section}} 
+\renewcommand{\thesubsection}{\thesection.\Roman{subsection}}
+\newcommand{\stext}[1]{\quad\text{\small #1}}
+\theoremstyle{definition}
+
+\newtheorem{theorem}{Theorem}
+\newtheorem*{claim}{Claim}
+\newtheorem{definition}{Definition}
+\newtheorem*{axiom}{Axiom}
+\newtheorem{lemma}{Lemma}
+\newtheorem*{remark}{Remark}
+\newtheorem*{example}{Example}
+\allowdisplaybreaks
+
+\begin{document}
+\begin{center}
+    \large \textbf{inventing numbers or number construction} \\
+    {natural numbers and all} \\
+
+    {\small the rain won't stop \\}
+\end{center}
+
+\begin{axiom}[Peano's Axioms] Let $\mathbb{N}$ denote the set of the natural numbers. We take $\mathbb{N}$ to be a set with infinite cardinality. 0 is an element of $\mathbb{N}$
+    \begin{align*}
+        \intertext{Define S to be the succesor function. For all $n \in \mathbb{N}$, $S(n) \in \mathbb{N}$. We will define the other elements of $\mathbb{N}$ using a recursive formula}
+        0 & := \varnothing \\
+        S(n) & := n \ \cup \{n\}
+        \intertext{There does not exist $n$ such that $S(n) = 0$.}
+        0 & := \varnothing \\
+        S(0) & := \varnothing \cup \{\varnothing\} = \{\varnothing\} := 1 \\
+        S(S(0)) & := \{\varnothing, \{\varnothing\}\} := 2 \\
+        S(S(S(0))) & := \{\varnothing ,\{\varnothing\}, \{\varnothing, \{\varnothing\}\}\} := 3 \\ 
+        S_n(... )&:= n \ \cup \{n\} := S(n)
+    \end{align*}
+\end{axiom}
+
+\begin{definition}[Addition on $\mathbb{N}$] Let addition be a function given by the map $+: \mathbb{N}^2 \to \mathbb{N}$. For all $a, b \in \mathbb{N}$:
+    \begin{align*}
+    a &+ 0 = a \\
+    a &+ S(b) = S(a + b)
+    \end{align*}
+\end{definition}
+
+\begin{claim} 1 + 1 = 2
+\end{claim}
+\begin{proof}
+    \begin{align*}
+        1 + 1 \\
+        1 + S(0) \\ 
+        S(1 + 0) \\
+        S(1) \\
+        2
+    \end{align*}
+\end{proof}
+    
+\begin{theorem}[Left Identity of Addition on $\mathbb{N}$] For all $a \in \mathbb{N}$, $a + 0 = 0 + a = a$
+\end{theorem}
+\begin{proof}
+    Base Case $(a = 0)$, 0 + 0 = 0
+
+    Induction Hypothesis. Suppose the statement holds for $a \geq 0$ consider the $S(a)$ case.
+    \begin{align*}
+        & 0 + S(a) \\
+        & S(0 + a) \stext{by Definition} \\
+        & S(a + 0) \stext{by Induction Hypothesis} \\
+        & S(a) \stext{by Identity Definition} \\
+    \end{align*}
+    The induction was satisfied. Thus, addition has a right identity of $0$.
+\end{proof}
+
+\begin{theorem}[Associativity of Addition on $\mathbb{N}$] 
+    For all $a, b, c \in \mathbb{N}$. 
+    \begin{equation*}
+        (a + b) + c = a + (b + c)
+    \end{equation*}
+\end{theorem}
+
+\begin{proof}
+    Base Case $(c = 0)$
+    \begin{align*}
+        (a + b) + 0 &= a + (b + 0) \\
+        a + b &= a + b
+    \end{align*}
+    Induction Hypothesis. Suppose the statements hold for $c \geq 0$. Consider the $S(c)$ case.
+    \begin{align*}
+            & (a + b) + S(c) \\
+            & S((a + b) + c) \stext{by Definition} \\ 
+            & S(a + (b + c)) \stext{by Induction Hypothesis} \\
+            & a + S(b + c) \stext{by Definition} \\ 
+            & a + (b + S(c)) \stext{by Definition}
+    \end{align*}
+    The induction was satisfied. Thus, addition is associative.
+\end{proof}
+
+\begin{lemma} For all $n \in \mathbb{N}$, $S(n) = n + 1$
+\end{lemma}
+\begin{proof}
+    \begin{align*}
+        & S(n) \\
+        & S(n + 0) \stext{by Identity Definition} \\
+        & n + S(0) \stext{by Definition} \\
+        & n + 1 \stext{by Definition of 1}
+    \end{align*}
+\end{proof}
+
+\begin{theorem}[Commutativity of Addition on $\mathbb{N}$] For all $a, b \in \mathbb{N}$
+    \begin{equation*}
+        a + b = b + a
+    \end{equation*}
+\end{theorem}
+\begin{proof} Base Case $(b = 0)$. $a + 0 = 0 + a$ by existence of left identity. \\
+    Induction Hypothesis. Suppose the statement holds for $b \geq 0$. Consider the $S(b)$ case.
+    \begin{align*}
+        & a + S(b) \\
+        & a + (b + 1) \stext{by Lemma 1} \\
+        & (a + b) + 1 \stext{by Associativity} \\
+        & (b + a) + 1 \stext{by Induction Hypothesis} \\
+        & b + (a + 1) \stext{by Associativity} \\
+        & b + (1 + a) \stext{by Base Case} \\
+        & (b + 1) + a \stext{by Associativity} \\
+        & S(b) + a \stext{by Lemma 1}
+    \end{align*}
+    The induction was satisfied. Thus, addition is commutative.
+\end{proof}
+
+\begin{definition}[Partial Order $\geq$ on $\mathbb{N}$]
+    For all $a, b \in \mathbb{N}$, we say that $a \geq b$ if there exists a $c \in \mathbb{N}$ such that $a = b + c$
+\end{definition}
+
+\begin{theorem}[Reflexivity of $\geq$ on $\mathbb{N}$] For  all $a \in \mathbb{N}$
+    \begin{equation*}
+        a \geq a
+    \end{equation*}
+\end{theorem}
+\begin{proof}
+    Let $a \in \mathbb{N}$ be given. Take $c = 0$
+    \begin{align*}
+        & a \\
+        & a + 0 \stext{by Right Identity of Addition} \\
+        & a + c \stext{by Substitution} \\ 
+        & a \geq a \stext{by Definition}
+    \end{align*}
+\end{proof}
+
+\begin{theorem}[Transitivity of $\geq$ on $\mathbb{N}$]
+    For all $a, b, c \in \mathbb{N}$, if $a \geq b$ and $b \geq c$, then $a \geq c$
+\end{theorem}
+\begin{proof}
+    \begin{align*}
+        & a \geq b \\
+        & a = b + d_1 \stext{by Assumption and Definition}\\ 
+        & a = (c + d_2) + d_1 \stext{by Assumption and Definition}\\
+        & a = c + (d_2 + d_1) \stext{by Associativity of Addition}\\
+        & a = c + d_3 \stext{by Closure of Addition}\\ 
+        & a \geq c \stext{by Definition}
+    \end{align*}
+\end{proof}
+
+\begin{lemma}
+    If $a = a + c$, then $c = 0$
+\end{lemma}
+\begin{proof} By contradiction, suppose that $c \neq 0$. Then, there exists a $b \in \mathbb{N}$ such that $c = S(b)$
+    \begin{align*}
+        a &= a + S(b) \\ 
+        a &= S(a + b) \\
+        a &= S(b + a) \\ 
+        a &= b + S(a) \\ 
+        a &= S(a) + b \\
+    \end{align*}
+    This is a contradiction. Thus, if $a = a + c$, then $c = 0$
+\end{proof}
+
+\begin{theorem}[Antisymmetry of $\geq$ on $\mathbb{N}$]
+    For all $a, b \in \mathbb{N}$, if $a \geq b$ and $b \geq a$, then $a = b$
+\end{theorem}
+\begin{proof}
+    \begin{align*}
+        a &= b + c_1 \stext{by Definition}\\
+        b &= a + c_2 \stext{by Definition}\\ 
+        a &= (a + c_2) + c_1 \stext{by Substitution}\\ 
+        a &= a + (c_2 + c_1) \stext{by Associativity of Addition}\\
+        \implies & c_2 + c_1 = 0 \stext{by Lemma 2}\\
+        \implies & c_2 = c_1 = 0 \stext{by Definition of 0}\\ 
+        a &= b + 0  \stext{by Substitution}\\
+        a &= b \stext{by Identity Definition of Addition}
+    \end{align*}
+\end{proof}
+
+\begin{definition}[Multiplication on $\mathbb{N}$] For all $a, b \in \mathbb{N}$. Let multiplication be a function given by a map $\cdot: \mathbb{N}^2 \to \mathbb{N}$
+    \begin{align*}
+        a \cdot 1 &= a \\
+        a \cdot 0 &= 0 \\
+        a \cdot S(b) &= (a \cdot b) + a
+    \end{align*}
+\end{definition}
+
+\begin{theorem}[Left Identity of Multiplication on $\mathbb{N}$] For all $a \in \mathbb{N}$, $a \geq 1$
+    \begin{equation*}
+        a \cdot 1 = 1 \cdot a = a
+    \end{equation*}
+\end{theorem}
+\begin{proof} Base Case $(a = 1)$, $1 \cdot 1 = 1$ \\
+    Induction Hypothesis. Suppose the statement holds for some $a \geq 1$. Consider the $S(a)$ case.
+    \begin{align*}
+        & 1 \cdot S(a) \\ 
+        & (1 \cdot a) + 1 \stext{by Definition} \\
+        & a + 1 \stext{by Induction Hypothesis} \\
+        & S(a)
+    \end{align*}
+    The induction was satisfied. Thus, multiplication has a left Identity which is 1.
+\end{proof}
+
+\begin{theorem}[Left Annihilator of Multiplication over $\mathbb{N}$] For all $a \in \mathbb{N}$
+    \begin{equation*}
+        a \cdot 0 = 0 \cdot a = 0
+    \end{equation*}
+\end{theorem}
+\begin{proof}
+    Base Case $(a = 0)$
+    \begin{equation*}
+        0 \cdot 0 = 0 \stext{by Left Annihilator Definition}
+    \end{equation*}
+    Induction Hypothesis. Suppose the statement holds for some $a \geq 0$. Consider the $S(a)$ case.
+    \begin{align*}
+        & 0 \cdot S(a) \\ 
+        & (0 \cdot a) + 0 \stext{by Definition}\\
+        & 0 + 0 \stext{by Induction Hypothesis}\\ 
+        & 0 \stext{by Identity of Addition}
+    \end{align*}
+\end{proof}
+
+\begin{theorem}[Distributivity of Multiplication over Addition on $\mathbb{N}$]
+    For all $a, b, c \in \mathbb{N}$
+    \begin{align*}
+        (a + b) \cdot c &= a \cdot c + b \cdot c \\
+        c \cdot (a + b) &= c \cdot a + c \cdot b 
+    \end{align*}
+\end{theorem}
+\begin{proof} Base Case $(c = 0)$
+    \begin{align*}
+        & (a + b) \cdot 0 \\
+        & 0 \stext{by Right Annihilator}\\ 
+        & a \cdot 0 \stext{by Right Annihilator}\\
+        & a \cdot 0 + 0 \stext{by Right Identity of Addition}\\ 
+        & a \cdot 0 + b \cdot 0 \stext{by Right Annihilator}
+    \end{align*}
+    \begin{align*}
+        & 0 \cdot (a + b) \\
+        & 0 \stext{by Left Annihilator}\\
+        & 0 \cdot a \stext{by Left Annihilator}\\ 
+        & 0 \cdot a + 0 \stext{by Right Identity of Addition}\\ 
+        & 0 \cdot a + 0 \cdot b \stext{by Left Annihilator}
+    \end{align*}
+    Induction Hypothesis. Suppose the statement holds for some $c \geq 0$. Consider the $S(c)$ case.
+    \begin{align*}
+        & (a + b) \cdot S(c) \\ 
+        & (a + b) \cdot c + (a + b) \stext{by Definition of Multiplication} \\ 
+        & (a \cdot c + b \cdot c) + (a + b) \stext{by Induction Hypothesis} \\
+        & (a \cdot c + b \cdot c) + (b + a) \stext{by Commutativity of Addition} \\ 
+        & a \cdot c + (b \cdot c + b) + a \stext{by Associativity of Addition} \\ 
+        & (a \cdot c + a) + (b \cdot c + b) \stext{by Commutativity of Addition} \\
+        & (a \cdot c + a \cdot 1) + (b \cdot c + b \cdot 1) \stext{by Identity Definition} \\ 
+        & a \cdot (c + 1) + b \cdot (c + 1) \stext{by Induction Hypothesis} \\ 
+        & a \cdot S(c) + b \cdot S(c) \stext{by Lemma 1}
+    \end{align*}
+    This shows that multiplication over addition distributes from the right.
+    \begin{align*}
+        & S(c) \cdot (a + b) \\ 
+        & (c + 1) \cdot (a + b) \stext{by Lemma 1} \\ 
+        & c \cdot (a + b) + 1 \cdot (a + b) \stext{by Induction Hypothesis} \\ 
+        & c \cdot (a + b) + (a + b) \stext{by Left Identity of Multiplication} \\
+        & (c \cdot a + c \cdot b) + (a + b) \stext{by Induction Hypothesis} \\ 
+        & (c \cdot a + c \cdot b) + (b + a) \stext{by Commutativity of Addition} \\ 
+        & c \cdot a + (c \cdot b + b) + a \stext{by Associativity of Addition} \\ 
+        & (c \cdot a + a) + (c \cdot b + b) \stext{by Commutativity of Addition} \\ 
+        & (c \cdot a + 1 \cdot a) + (c \cdot b + b \cdot 1) \stext{by L/R Identity of Multiplication}\\ 
+        & (c + 1) \cdot a + (c + 1) \cdot b \stext{by Induction Hypothesis} \\
+        & S(c) \cdot a + S(c) \cdot b \stext{by Lemma 1}
+    \end{align*}
+    This shows that multiplication over addition distributes from the left.
+    Thus, multiplication distributes over addition on both sides.
+\end{proof}
+
+\begin{theorem}[Commutativity of Multiplication on $\mathbb{N}$] For all $a, b \in \mathbb{N}$
+    \begin{equation*}
+        a \cdot b = b \cdot a
+    \end{equation*}
+\end{theorem}
+\begin{proof} Base Case $(b = 1)$
+    \begin{equation*}
+        a \cdot 1 = 1 \cdot a \stext{by Left Identity}
+    \end{equation*}
+    Induction Hypothesis. Suppose the statement holds for some $b \geq 1$. Consider the $S(b)$ case.
+    \begin{align*}
+        & a \cdot S(b) \\
+        & (a \cdot b) + a \stext{by Definition} \\
+        & (b \cdot a) + a \stext{by Induction Hypothesis} \\
+        & (b \cdot a) + (1 \cdot a) \stext{by Identity Definition}\\
+        & (b + 1) \cdot \stext{by Distributivity} \\
+        & S(b) \cdot a \stext{by Lemma 1}
+    \end{align*}
+\end{proof}
+
+\begin{theorem}[Associativity of Multiplication on $\mathbb{N}$] For all $a, b, c \in \mathbb{N}, (a \cdot b) \cdot c =  a \cdot (b \cdot c)$
+
+\end{theorem}
+
+\begin{proof}
+    \begin{align*}
+        & (a \cdot b) \cdot S(c) \\ 
+        & ((a \cdot b) \cdot c) + (a \cdot b) \stext{by Definition} \\
+        & (a \cdot (b \cdot c)) + (a \cdot b) \stext{by Induction Hypothesis} \\
+        & a \cdot ((b \cdot c) + b) \stext{by Distributivity} \\ 
+        & a \cdot (b \cdot S(c)) \stext{by Definition}
+    \end{align*}
+\end{proof}
+
+\begin{definition}
+    Define $*$ a higher-order operation indexed by $n$, on $\mathbb{N}$ given by the recursive relation. For all $a, b, n \in \mathbb{N}$
+
+    \begin{align*}
+        *_{0}(a) &:= S(a) \\
+        a *_{*_{0}(n)} *_{0}(b) &:= (a *_{*_{0}(n)} *_{0}(b)) *_{n} a
+    \end{align*}
+\end{definition}
+
+\begin{example} $(n = 1)$
+    \begin{align*}
+        a *_{*_{0}(1)} *_{0}(b) &= (a *_{*_{0}(1)} *_{0}(b)) *_{1} a \\
+        a *_{2} S(b) &=  (a *_{2} b) *_1 a
+        \intertext{Renaming with our familiar notation}
+        a \cdot S(b) &= (a \cdot b) + a
+    \end{align*}
+    We can recognize that this is just multiplication.
+\end{example}
+
+\end{document}
