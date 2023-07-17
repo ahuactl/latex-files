@@ -1,0 +1,124 @@
+\documentclass[12pt]{article}
+
+\usepackage{amsmath}
+\usepackage{relsize}
+\usepackage[margin=1in, paperwidth=8.5in, paperheight=13in]{geometry}
+\usepackage{amsthm}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{parskip}
+\usepackage{microtype}
+
+\pagenumbering{gobble}
+\renewcommand{\thesection}{\Roman{section}} 
+\renewcommand{\thesubsection}{\thesection.\Roman{subsection}}
+\newcommand{\stext}[1]{\quad\text{\small #1}}
+\theoremstyle{definition}
+
+\newtheorem{theorem}{Theorem}
+\newtheorem*{claim}{Claim}
+\newtheorem*{definition}{Definition}
+\newtheorem*{axiom}{Axiom}
+\newtheorem{lemma}{Lemma}
+\newtheorem*{remark}{Remark}
+\newtheorem*{example}{Example}
+\allowdisplaybreaks
+
+\begin{document}
+\begin{center}
+    \large \textbf{dirichlet integral} \\
+    {feynman was great some says} \\
+
+    {\small the rain stopped and it's sunny\\}
+\end{center}
+
+The Dirichlet Integral for a non-zero real-valued $a$ is given by $I$, where
+\begin{equation*}
+    I = \int_{-\infty}^{\infty} \frac{\sin(ax)}{x} \,dx
+\end{equation*}
+
+\begin{lemma} The function $f$
+    \begin{equation*}
+        f(x) = \frac{\sin(ax)}{x}
+    \end{equation*}
+    is an even function.
+\end{lemma}
+\begin{proof}
+    \begin{align*}
+        f(-x) &=  \frac{\sin(-ax)}{-x} \\ 
+        \intertext{Since $\sin t$ is an odd function, we can pop the negative sign out}
+        &= \frac{-\sin(ax)}{-x} \\
+        &= \frac{\sin(ax)}{x} = f(x) \\ 
+        \implies f(-x) &= f(x)
+    \end{align*}
+\end{proof}
+
+Since the integrand is an even function, by the properties of the integral, we can consider an integral from $0$ to $\infty$ and double the result. Motivated by Feynman's integration, consider a generalized function $g$ 
+\begin{equation*}
+    g(s, x) = e^{-sx} \frac{\sin(ax)}{x}
+\end{equation*}
+where our function $f$ is a special case when $s = 0$. We can then integrate $g$ from $0$ to $\infty$, take $s$ to be 0 and double the result. In that case, the value that is derived is equal to the original integral $I$. We will call the integral of $g$, $I(s)$.
+
+\begin{definition}[Complex Exponential Definition of $\sin t$] For $t \in \mathbb{C}$
+    \begin{equation*}
+        \sin t = \frac{e^{it} - e^{-it}}{2i}
+    \end{equation*}
+\end{definition}
+
+\begin{lemma}
+    \begin{equation*}
+        \lim_{s \to \infty} I(s) = 0
+    \end{equation*}
+\end{lemma}
+\begin{proof}
+    \begin{align*}
+    \lim_{s \to \infty} I(s) &= \lim_{s \to \infty} \int_{0}^{\infty} e^{-sx} \frac{\sin(ax)}{x} \,dx \\ 
+    \intertext{by the Dominated Convergence Theorem, the exchange of limit and integrals are allowed.}
+    &=  \int_{0}^{\infty} \lim_{s \to \infty} e^{-sx} \frac{\sin(ax)}{x} \,dx \\
+    \intertext{The whole integrand collapses to $0$ since the exponential decay term approaches 0 as $s \to \infty$. Thus, the whole integral is also $0$.}
+    \lim_{s \to \infty} I(s) &= 0
+    \end{align*}
+\end{proof}
+
+Using the tools from above, we can now evaluate our integral.
+\begin{align*}
+    % I &= \int_{-\infty}^{\infty} \frac{\sin(ax)}{x} \,dx \\
+    I(s) &= \int_{0}^{\infty} e^{-sx} \frac{\sin(ax)}{x} \,dx \\
+    \intertext{Taking the derivative of both sides}
+    I'(s) &= \frac{d}{ds} \int_{0}^{\infty} e^{-sx} \frac{\sin(ax)}{x} \,dx \\
+    \intertext{Since the integrand is bounded, we can interchange the derivative and integral operators. By Leibniz' Integral Rule, the total derivative turns into a partial one inside the integral.}
+    &= \int_{0}^{\infty} \frac{\partial}{\partial s} \left(e^{-sx} \frac{\sin(ax)}{x}\right) \,dx \\
+    \intertext{Taking the partial derivative with respect to $s$}
+    &= \int_{0}^{\infty} -e^{-sx} \sin(ax) \,dx \\
+    &= -\int_{0}^{\infty} e^{-sx} \sin(ax) \,dx \\
+    \intertext{Using the complex exponential definition of $\sin$}
+    &= -\int_{0}^{\infty} e^{-sx} \frac{e^{iax} - e^{-iax}}{2i} \,dx \\
+    &= - \frac{1}{2i} \int_{0}^{\infty} e^{-sx}(e^{iax} - e^{-iax})\,dx \\
+    &= - \frac{1}{2i} \int_{0}^{\infty} e^{-(s - ia)x} - e^{-(s + ia)x}\,dx \\
+    \intertext{Evaluating the improper integral}
+    &= - \frac{1}{2i} \left(\frac{-1}{s - ia} e^{-(s - ia)x} - \frac{-1}{s + ia}  e^{-(s + ia)x}\right)\Bigg|_{0}^{x \to \infty} \\
+    &= - \frac{1}{2i} \left(0 - \left(\frac{-1}{s - ia} - \frac{-1}{s + ia}\right)\right) \\
+    &= - \frac{1}{2i} \left(0 - \left(\frac{-1}{s - ia} - \frac{-1}{s + ia}\right)\right) \\
+    &= - \frac{1}{2i} \left(\frac{1}{s -ia} - \frac{1}{s + ia}\right) \\
+    &= - \frac{1}{2i} \left(\frac{s + ia}{(s - ia)(s + ia)} - \frac{s - ia}{(s + ia)(s - ia)}\right) \\
+    &= - \frac{1}{2i} \left(\frac{s + ia}{s^2 + a^2} - \frac{s - ia}{s^2 + a}\right) \\
+    &= - \frac{1}{2i} \left(\frac{2ia}{s^2 + a^2}\right) \\
+    I'(s) &= - \frac{a}{s^2 + a^2} \\
+    \intertext{Taking the antiderivative of both sides with respect to $s$ to recover the origianal function $I(s)$} 
+    \int I'(s) \,ds &= \int - \frac{a}{s^2 + a^2} \,ds  \\
+    I(s) &= -\arctan\left(\frac{s}{a}\right) + C \\ 
+    \intertext{Since we know the value of the limit $s \to \infty$ of $I(s)$ to be 0, we can take the limit of both sides to find the value of the constant of integration.}
+    \lim_{s \to \infty} I(s) &= \lim_{s \to \infty} \left(-\arctan\left(\frac{s}{a}\right) + C\right) \\
+    0 &= -\lim_{s \to \infty} \left(\arctan\left(\frac{s}{a}\right)\right) + C \\
+    0 &= -\frac{\pi}{2} + C \\ 
+    C &= \frac{\pi}{2} \\ 
+    I(s) &= -\arctan\left(\frac{s}{a}\right) + \frac{\pi}{2} \\
+    \intertext{Recalling how we defined $I$ and $I(s)$, and substituting}
+    I &= 2 \cdot I(s = 0) \\
+    &= 2 \cdot \left(-\arctan\left(\frac{0}{a}\right) + \frac{\pi}{2}\right) \\
+    &= 2 \cdot \left(0 + \frac{\pi}{2}\right) \\ 
+    &= \pi \\ \\
+    & \boxed{\int_{-\infty}^{\infty} \frac{\sin(ax)}{x} \,dx = \pi}
+\end{align*}
+
+\end{document}
